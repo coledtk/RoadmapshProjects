@@ -11,7 +11,7 @@ import psutil
 def print_usage():
     usage = psutil.cpu_percent(interval=1)
     return usage
-    
+
 def print_mem_usage():
     memory = psutil.virtual_memory()
     mfree = memory[4]
@@ -26,10 +26,6 @@ def print_disk_space():
     dpercentage = space[3]
     return dfree, dused, dpercentage
 
-def print_top5_proccess_usage():
-    proc5 = psutil.process_iter(['pid', 'name', 'usage']):
-    
-def print_top5_process_mem():
-    psutil.process_iter(['fields']):
-
+def get_top_processes(sort_by='value', limit=5):
+    processes = []
 
