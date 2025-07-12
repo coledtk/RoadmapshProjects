@@ -7,11 +7,12 @@
 '''
 import psutil 
 
-
+# waits 1 second, then measures CPU usage over that time, returns a float.
 def get_usage():
     usage = psutil.cpu_percent(interval=1)
     return usage
 
+# 
 def get_mem_usage():
     memory = psutil.virtual_memory()
     mfree = memory[4]
