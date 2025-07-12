@@ -25,39 +25,42 @@ def get_mem_usage():
     memory = psutil.virtual_memory()
     mfree = format_bytes(memory.available)
     mused = format_bytes(memory.used)
-    mpercentage = format_bytes(memory.percent)
+    mpercentage = memory.percent
     return mfree, mused, mpercentage
 
 
-# 
+# get all disk information then parses for attributes.
 def get_disk_space():
     space = psutil.disk_usage('/')
     dfree = format_bytes(space.free)
     dused = format_bytes(space.used)
-    dpercentage = format_bytes(space.percent)
+    dpercentage = space.percent
     return dfree, dused, dpercentage
 
+# grabs running system processes
 def get_top_processes(sort_by='cpu', limit=5):
     processes = []
-
-    for proc in psutil.proces_iter(['pid', 'name']):
+    # grabs running system processes
+    for proc in psutil.process_iter(['pid', 'name']):
         try:
+            # determines if sorting by cpu or ram usage.
             if sort_by == 'cpu':
                 usage = proc.cpu_percent(interval=0.1)
-            elif sort_by == 'mem'
-                usage = proc.memory_info().rss
+            elif sort_by == 'mem':
+                usage = proc.memory_info().rss # resident set size = how much ram the proc is using
             else:
                 print("invalid sort option")
                 return []
-            
+            # returns the top 5
             processes.append({
                 'pid': proc.info['pid'],
                 'name': proc.info['name'],
-                'usage': format_bytes(usage)
+                'usage': usage
             })
-        except Exception as e
+        except Exception as e:
             print(f"Error: {e}")
             continue
+            # sorts based on either cpu or ram usage.
     processes.sort(key=lambda p: p['usage'], reverse=True)
     return processes[:limit]
 
