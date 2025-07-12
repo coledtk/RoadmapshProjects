@@ -3,6 +3,7 @@ import tarfile
 import shutil
 import datetime
 
+# Checks if directory exists, ensures the directory has been compressed, move to /tmp.
 def compress_directory(source_dir, output_name):
     if not os.path.isdir(source_dir):
         print(f"Error: '{source_dir}' is not a valid directory.")
@@ -16,8 +17,8 @@ def compress_directory(source_dir, output_name):
     archive_path = os.path.join('/tmp', output_name)
 
     try:
-        with tarfile.open(archive_path, "w:gz") as tar:
-            tar.add(source_dir, arcname=os.path.basename(source_dir))
+        with tarfile.open(archive_path, "w:gz") as tar: # tar creates the compressed file, then compresses the specified directory to it.
+            tar.add(source_dir, arcname=os.path.basename(source_dir)) # 
         print(f"Compressed to: {archive_path}")
         return archive_path
     except Exception as e:
@@ -29,10 +30,10 @@ def move_to_home(archive_path):
         print("Archive file does not exist.")
         return
 
-    dest_path = os.path.join('/home', os.path.basename(archive_path))
+    dest_path = os.path.join('/home', os.path.basename(archive_path)) # sets the path you will be storing to.
 
     try:
-        shutil.move(archive_path, dest_path)
+        shutil.move(archive_path, dest_path) # actually moving the file.
         print(f"Moved archive to: {dest_path}")
     except Exception as e:
         print(f"Move failed: {e}")
@@ -44,14 +45,14 @@ if __name__ == '__main__':
     if not os.path.isdir(source_dir):
         print(f"'{source_dir}' is not a valid directory. Exiting.")
         exit(1)
-
+    # allows you to name the file
     custom_name = input("Enter archive name (or leave blank for auto): ").strip()
-
+    # applies the timestamp to the file name
     if not custom_name:
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         custom_name = f"{os.path.basename(source_dir)}_{timestamp}"
-
+    # compresses the directory and names the file
     archive_path = compress_directory(source_dir, custom_name)
-
+    # move the file to home.
     if archive_path:
         move_to_home(archive_path)
