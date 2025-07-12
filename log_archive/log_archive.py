@@ -3,6 +3,7 @@ import tarfile
 import shutil
 import datetime
 
+
 # Checks if directory exists, ensures the directory has been compressed, move to /tmp.
 def compress_directory(source_dir, output_name):
     if not os.path.isdir(source_dir):
@@ -25,6 +26,7 @@ def compress_directory(source_dir, output_name):
         print(f"Compression failed: {e}")
         return None
 
+
 def move_to_home(archive_path):
     if not os.path.isfile(archive_path):
         print("Archive file does not exist.")
@@ -37,6 +39,7 @@ def move_to_home(archive_path):
         print(f"Moved archive to: {dest_path}")
     except Exception as e:
         print(f"Move failed: {e}")
+
 
 if __name__ == '__main__':
     # Prompt user for input
