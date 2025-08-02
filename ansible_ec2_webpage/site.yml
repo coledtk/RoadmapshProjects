@@ -1,0 +1,12 @@
+---
+- name: Minimal static site setup
+  hosts: localhost
+  connection: local
+  become: true
+
+  vars:
+    repo_url: https://github.com/coledtk/coledtk.github.io.git
+    web_root: /usr/share/nginx/html
+
+  roles:
+    - setup
