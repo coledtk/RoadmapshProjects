@@ -1,0 +1,7 @@
+[Unit]
+Description=Fake Load Generator Service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/fake-load.sh
+Restart=on-failure
