@@ -1,0 +1,36 @@
+---
+- name: Install base
+  yum:
+    name:
+      - git
+      - nginx
+    state: present
+    update_cache: yes
+
+- name: Start and enable nginx
+  service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Remove existing nginx html dir
+  file:
+    path: "{{ web_root }}"
+    state: absent
+
+- name: Recreate empty nginx html dir
+  file:
+    path: "{{ web_root }}"
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: '0755'
+
+- name: Clone site to web root
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ web_root }}"
+    version: main
+    clone: yes
+    force: yes
+  become_user: nginx
