@@ -1,0 +1,11 @@
+[Unit]
+Description=Run fake load every 10s
+
+[Timer]
+OnBootSec=10
+OnUnitActiveSec=10
+AccuracySec=1s
+Unit=fake-load.service
+
+[Install]
+WantedBy=timers.target
