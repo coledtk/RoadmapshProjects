@@ -1,14 +1,11 @@
 #!/bin/bash
+set -euo pipefail
+exec >> /tmp/fake-load.log 2>&1
 
-# yes to /dev/null set PID
-(yes > /dev/null &) && PID = $!
+# stress 1 core for 5 seconds
+stress --cpu 1 --timeout 5
 
-# wait 5 seconds
-sleep
-
-# write 10m to /tmp 
-dd if=/dev/urandom of=/tmp/dummyservice bs=1m count=10 status=none
-
-# remove file
-rm -f /tmp/dummyservice
+# write 10M
+dd if=/dev/urandom of=/tmp/fakefile bs=1M count=10 status=none
+rm -f /tmp/fakefile
 
