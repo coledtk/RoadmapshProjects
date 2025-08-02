@@ -2,7 +2,7 @@
 
 LOCAL_DIR=./dist
 REMOTE_USER=ec2-user
-REMOTE_HOST=your-ec2-ip
+REMOTE_HOST=<your-ip>
 REMOTE_PATH=/var/www/my-site
 KEY=your-key.pem
 
