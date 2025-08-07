@@ -1,0 +1,13 @@
+
+- name: Configure site server
+  hosts: ec2
+  become: yes
+  tasks:
+    - name: Update apt
+      apt:
+        update_cache: yes
+
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
